@@ -7,8 +7,11 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import android.R
 
 
 class MapsActivity : AppCompatActivity(),
@@ -27,16 +31,51 @@ class MapsActivity : AppCompatActivity(),
 
     private val MY_LOCATION_REQUEST_CODE = 1
     private lateinit var mMap: GoogleMap
+    var place : Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        init()
+        setUpEvents()
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
+    //Init Widgets
+    fun init() {
+        place = findViewById(R.id.btn_places)
+    }
+
+    //Setup Events
+    fun setUpEvents() {
+        place?.setOnClickListener { showPlacesList() }
+    }
+
+    private fun showPlacesList() {
+
+    }
+
+
+    private fun setFragment() {
+        val fragmentManager: FragmentManager
+        val fragmentTransaction: FragmentTransaction
+
+        fragmentManager = supportFragmentManager
+        fragmentTransaction = fragmentManager.beginTransaction()
+        val inboxFragment = PlacesFragment()
+        fragmentTransaction.replace(R.id.map, inboxFragment)
+        fragmentTransaction.commit()
+    }
+
+
+
+
+    //Events Maps
     fun enableMyLocationIfPermitted() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {

@@ -20,11 +20,13 @@
         <Button android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Mapa"/>
+                android:text="Mapa"
+                android:id="@+id/btn_map"/>
         <Button android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Lista"/>
+                android:text="Lista"
+                android:id="@+id/btn_places"/>
     </LinearLayout>
 
 
