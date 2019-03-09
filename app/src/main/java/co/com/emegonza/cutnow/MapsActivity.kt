@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.content.ContextCompat
@@ -21,8 +22,6 @@ import com.google.android.gms.maps.model.LatLng
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import android.R
-
 
 class MapsActivity : AppCompatActivity(),
     OnMapReadyCallback,
@@ -32,6 +31,7 @@ class MapsActivity : AppCompatActivity(),
     private val MY_LOCATION_REQUEST_CODE = 1
     private lateinit var mMap: GoogleMap
     var place : Button? = null
+    var fragment : SupportMapFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +41,9 @@ class MapsActivity : AppCompatActivity(),
         init()
         setUpEvents()
 
-        val mapFragment = supportFragmentManager
+        fragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        fragment?.getMapAsync(this)
     }
 
     //Init Widgets
@@ -57,18 +57,18 @@ class MapsActivity : AppCompatActivity(),
     }
 
     private fun showPlacesList() {
-
+        setFragment(PlacesFragment())
     }
 
 
-    private fun setFragment() {
+    private fun setFragment(fragment : Fragment) {
         val fragmentManager: FragmentManager
         val fragmentTransaction: FragmentTransaction
 
         fragmentManager = supportFragmentManager
         fragmentTransaction = fragmentManager.beginTransaction()
-        val inboxFragment = PlacesFragment()
-        fragmentTransaction.replace(R.id.map, inboxFragment)
+        //val inboxFragment = PlacesFragment()
+        fragmentTransaction.replace(R.id.map,fragment)
         fragmentTransaction.commit()
     }
 
