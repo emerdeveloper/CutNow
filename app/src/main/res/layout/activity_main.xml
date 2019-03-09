@@ -15,14 +15,16 @@
             android:weightSum="2"
             android:id="@+id/container_visualization" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginBottom="15dp"
+            android:layout_marginStart="8dp" android:layout_marginBottom="22dp"
             app:layout_constraintBottom_toBottomOf="parent">
         <Button android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" tools:text="Mapa"/>
+                android:layout_height="wrap_content"
+                android:text="Mapa"/>
         <Button android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" tools:text="Lista"/>
+                android:layout_height="wrap_content"
+                android:text="Lista"/>
     </LinearLayout>
 
 
