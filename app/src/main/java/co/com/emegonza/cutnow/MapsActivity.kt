@@ -4,7 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Criteria
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
@@ -22,11 +25,13 @@ import com.google.android.gms.maps.model.LatLng
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.GooglePlayServicesUtil
 
 class MapsActivity : AppCompatActivity(),
     OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener {
+    GoogleMap.OnMyLocationClickListener,
+    LocationListener {
 
     private val MY_LOCATION_REQUEST_CODE = 1
     private lateinit var mMap: GoogleMap
@@ -41,6 +46,7 @@ class MapsActivity : AppCompatActivity(),
         init()
         setUpEvents()
 
+        if (isGooglePlayServicesAvailable())
         fragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         fragment?.getMapAsync(this)
@@ -97,6 +103,15 @@ class MapsActivity : AppCompatActivity(),
             mMap.isMyLocationEnabled = true
             mMap.setOnMyLocationButtonClickListener(this)
             mMap.setOnMyLocationClickListener(this)
+
+            var locationManager : LocationManager =  getSystemService(LOCATION_SERVICE) as LocationManager
+            var bestProvider : String = locationManager.getBestProvider(Criteria(), true)
+            var location = locationManager.getLastKnownLocation(bestProvider);
+            if (location != null) {
+                onLocationChanged(location);
+            }
+            locationManager.requestLocationUpdates(bestProvider, 20000, 0f, this)
+            //locationManager.requestLocationUpdates(bestProvider, 20000, 0, this)
         }
     }
 
@@ -146,8 +161,13 @@ class MapsActivity : AppCompatActivity(),
     }
 
     override fun onMyLocationClick(location: Location) {
-        //mMap.setMinZoomPreference(12f)
+        //mMap.setMinZoomPreference(15f)
 
+        mMap.addCircle(createCircle(location))
+    }
+
+    //Create Circle
+    fun createCircle(location: Location) : CircleOptions {
         val circleOptions = CircleOptions()
         circleOptions.center(
             LatLng(
@@ -157,11 +177,33 @@ class MapsActivity : AppCompatActivity(),
         )
 
         circleOptions.radius(200.0)
-        circleOptions.fillColor(Color.RED)
+        //circleOptions.fillColor(R.color.colorCircle)
         circleOptions.strokeWidth(6f)
-
-        mMap.addCircle(circleOptions)
+        return circleOptions
     }
+
+    //Get Location FirstTime
+    override fun onLocationChanged(location: Location?) {
+        var latLng =  LatLng(location!!.latitude, location!!.longitude)
+        mMap.addCircle(createCircle(location!!))
+        //mMap.addMarker(new MarkerOptions().position(latLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f));
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
 
     //Google playServices
     private fun isGooglePlayServicesAvailable(): Boolean {
@@ -169,14 +211,12 @@ class MapsActivity : AppCompatActivity(),
         val status = googleApiAvailability.isGooglePlayServicesAvailable(this)
         if (ConnectionResult.SUCCESS == status)
             return true
-        else {
-            if (googleApiAvailability.isUserResolvableError(status))
-                Toast.makeText(
-                    this,
-                    "Please Install google play services to use this application",
-                    Toast.LENGTH_LONG
-                ).show()
+        else  if (googleApiAvailability.isUserResolvableError(status)){
+            var dialog = GooglePlayServicesUtil.getErrorDialog(status, this, status);
+            dialog.show();
         }
         return false
     }
+
+    //TODO : preguntar por el GPS si está  activo
 }
