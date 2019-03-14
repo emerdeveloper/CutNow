@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="11dp"
+        style="@style/CardViewBase"
+        android:background="@android:color/white"
+        android:foreground="?android:attr/selectableItemBackground">
+    <LinearLayout
+            style="@style/CardViewItemListContent"
+            android:orientation="horizontal"
+            android:gravity="center">
+        <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/barber"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" android:gravity="center_vertical" android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+            <TextView
+                    android:id="@+id/nameTextView"
+                    style="@style/MainOpenSansBoldText"
+                    tools:text="Alejandro Jimenes"/>
+            <TextView
+                    android:id="@+id/location"
+                    style="@style/SecondOpenSansBoldText"
+                    tools:text="Bello"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:weightSum="4" android:gravity="center_vertical">
+                <TextView
+                        android:id="@+id/qualification"
+                        style="@style/ThirdOpenSansBoldText"
+                        tools:text="4.5"/>
+                <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:rating="4.5"
+                        android:numStars="5" android:layout_marginRight="10dp" android:layout_marginLeft="10dp"/>
+                <TextView
+                        android:id="@+id/usersQuantity"
+                        style="@style/ThirdOpenSansBoldText"
+                        tools:text="(100)"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

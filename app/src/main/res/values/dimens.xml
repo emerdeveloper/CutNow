@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardViewElevation">8dp</dimen>
+    <dimen name="cardCornerRadius">5dp</dimen>
+    <dimen name="contentCardViewPaddingTopBottom">6dp</dimen>
+    <dimen name="contentCardViewPaddingLeftRight">20dp</dimen>
+    <dimen name="mainText">20sp</dimen>
+    <dimen name="secondText">17sp</dimen>
+    <dimen name="thirdText">14sp</dimen>
+</resources>
