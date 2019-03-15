@@ -1,20 +1,15 @@
 package co.com.emegonza.cutnow.activities.profile
 
+
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.support.v7.widget.Toolbar;
 import co.com.emegonza.cutnow.R
-import co.com.emegonza.cutnow.activities.listUsers.UserRecyclerViewAdapter
-import co.com.emegonza.cutnow.model.User
-import kotlinx.android.synthetic.main.barber_profile.*
 
 class BarberProfileFragment : Fragment() {
 
@@ -34,11 +29,16 @@ class BarberProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.barber_profile, container, false)
-        val toolbarLayout : CollapsingToolbarLayout = view.findViewById(R.id.toolbar_layout)
+        val toolbarLayout : Toolbar = view.findViewById(R.id.toolbar)
+
+
+        if(activity is AppCompatActivity){
+            (activity as AppCompatActivity).setSupportActionBar(toolbarLayout)
+            if ((activity as AppCompatActivity).supportActionBar != null)
+                (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
 
         toolbarLayout.title = name
-        /*if(supportActionBar != null)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true);*/
         /*fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
