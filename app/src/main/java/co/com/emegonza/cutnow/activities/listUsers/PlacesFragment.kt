@@ -1,7 +1,6 @@
 package co.com.emegonza.cutnow.activities.listUsers
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import co.com.emegonza.cutnow.R
+import co.com.emegonza.cutnow.activities.profile.BarberProfileFragment
 import co.com.emegonza.cutnow.model.User
 
 class PlacesFragment : Fragment() {
@@ -33,7 +33,8 @@ class PlacesFragment : Fragment() {
 
         //linearLayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager =  LinearLayoutManager(activity)
-        recyclerView.adapter = UserRecyclerViewAdapter(users, { userItem : User -> partItemClicked(userItem) })
+        recyclerView.hasFixedSize()
+        recyclerView.adapter = UserRecyclerViewAdapter(users, { userItem : User -> barberItemClicked(userItem) })
         return view
     }
     override fun onAttach(context: Context) {
@@ -45,13 +46,20 @@ class PlacesFragment : Fragment() {
         //listener = null
     }
 
-    private fun partItemClicked(userItem : User) {
+    private fun barberItemClicked(userItem : User) {
         Toast.makeText(activity, "Clicked: ${userItem.name}", Toast.LENGTH_LONG).show()
 
-        // Launch second activity, pass part ID as string parameter
-        /*val showDetailActivityIntent = Intent(activity, PartDetailActivity::class.java)
-        showDetailActivityIntent.putExtra(Intent.EXTRA_TEXT, partItem.id.toString())
-        startActivity(showDetailActivityIntent)*/
+        val bundle: Bundle = Bundle()
+        val fragment: BarberProfileFragment = BarberProfileFragment()
+        bundle.putString("name", userItem.name)
+
+        fragment.arguments = bundle
+        activity?.supportFragmentManager!!
+            .beginTransaction()
+            //.AddSharedElement(image, image.TransitionName)
+            .replace(R.id.container_frame, fragment)
+            .addToBackStack("barber")
+            .commit();
     }
 
     private fun addUsers()

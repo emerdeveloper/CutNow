@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         init()
         setUpEvents()
+
+        addFragment(MapsFragment(), false, "one")
     }
 
     //Init Widgets
@@ -34,11 +36,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPlacesList() {
-        addFragment(PlacesFragment(), false, "one")
+        addFragment(PlacesFragment(), false, "places")
     }
 
     private fun showMap() {
-        addFragment(MapsFragment(), false, "one")
+        addFragment(MapsFragment(), false, "map")
     }
 
     //Methods
