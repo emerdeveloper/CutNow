@@ -1,6 +1,5 @@
 package co.com.emegonza.cutnow.activities.profile
 
-
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.Toolbar;
+import android.widget.LinearLayout
 import co.com.emegonza.cutnow.R
 
 class BarberProfileFragment : Fragment() {
@@ -37,6 +37,9 @@ class BarberProfileFragment : Fragment() {
             if ((activity as AppCompatActivity).supportActionBar != null)
                 (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
+
+        var containerButtons = activity!!.findViewById<LinearLayout>(R.id.container_visualization)
+        containerButtons.visibility = View.GONE;
 
         toolbarLayout.title = name
         /*fab.setOnClickListener { view ->

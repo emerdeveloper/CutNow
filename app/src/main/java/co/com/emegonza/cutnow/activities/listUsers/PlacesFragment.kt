@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import co.com.emegonza.cutnow.R
 import co.com.emegonza.cutnow.activities.profile.BarberProfileFragment
@@ -44,6 +45,12 @@ class PlacesFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         //listener = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var containerButtons = activity!!.findViewById<LinearLayout>(R.id.container_visualization)
+        containerButtons.visibility = View.VISIBLE;
     }
 
     private fun barberItemClicked(userItem : User) {
