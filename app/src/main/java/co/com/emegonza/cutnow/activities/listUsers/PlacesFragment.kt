@@ -19,7 +19,6 @@ import org.json.simple.JSONObject
 
 class PlacesFragment : Fragment(), FirebaseDelegate {
 
-    private val users: ArrayList<User> = ArrayList()
     private var mainActivity: MainActivity = MainActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +34,10 @@ class PlacesFragment : Fragment(), FirebaseDelegate {
         val recyclerView : RecyclerView = view.findViewById(R.id.places_recycler_view)
 
         mainActivity =  activity as MainActivity
-        addUsers()
 
         recyclerView.layoutManager =  LinearLayoutManager(mainActivity)
         recyclerView.hasFixedSize()
-        recyclerView.adapter = UserRecyclerViewAdapter(users, { userItem : User -> barberItemClicked(userItem) })
+        recyclerView.adapter = UserRecyclerViewAdapter(addUsers(), { userItem : User -> barberItemClicked(userItem) })
         return view
     }
     override fun onAttach(context: Context) {
@@ -72,22 +70,19 @@ class PlacesFragment : Fragment(), FirebaseDelegate {
             .commit()
     }
 
-    private fun addUsers()
+    private fun addUsers() : ArrayList<User>
     {
-        //mainActivity.myData
+        val users: ArrayList<User> = ArrayList()
         for (item in mainActivity.data!!)
         {
             var name = (item.value as JSONObject).get("name") as String
             var location = ((item.value as JSONObject).get("location") as JSONObject).get("city") as String
             var qualificationAny = (item.value as JSONObject).get("qualification")
-            //var qualification: Double
             var qualification = if (qualificationAny is Long) qualificationAny.toDouble() else qualificationAny as Double
 
             users.add(User( name, location, qualification, 100))
         }
-        /*for (i in 1..15) {
-            users.add(User( "Emerson 00000"+ i, "Bello", 4.5, 100))
-        }*/
+        return users
     }
 
     override fun onUpdateBarberData(barber: JSONObject) {
