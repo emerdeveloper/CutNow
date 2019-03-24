@@ -10,13 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import co.com.emegonza.cutnow.MainActivity
 import co.com.emegonza.cutnow.R
 import co.com.emegonza.cutnow.activities.profile.BarberProfileFragment
+import co.com.emegonza.cutnow.contracts.FirebaseDelegate
 import co.com.emegonza.cutnow.model.User
+import org.json.simple.JSONObject
 
-class PlacesFragment : Fragment() {
-    private lateinit var adapter: UserRecyclerViewAdapter
-    val users: ArrayList<User> = ArrayList()
+class PlacesFragment : Fragment(), FirebaseDelegate {
+
+    private val users: ArrayList<User> = ArrayList()
+    private var mainActivity: MainActivity = MainActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +34,10 @@ class PlacesFragment : Fragment() {
         val view : View = inflater.inflate(R.layout.fragment_place_list, container, false)
         val recyclerView : RecyclerView = view.findViewById(R.id.places_recycler_view)
 
+        mainActivity =  activity as MainActivity
         addUsers()
 
-        //linearLayoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager =  LinearLayoutManager(activity)
+        recyclerView.layoutManager =  LinearLayoutManager(mainActivity)
         recyclerView.hasFixedSize()
         recyclerView.adapter = UserRecyclerViewAdapter(users, { userItem : User -> barberItemClicked(userItem) })
         return view
@@ -44,24 +48,23 @@ class PlacesFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        //listener = null
     }
 
     override fun onResume() {
         super.onResume()
-        var containerButtons = activity!!.findViewById<LinearLayout>(R.id.container_visualization)
+        var containerButtons = mainActivity.findViewById<LinearLayout>(R.id.container_visualization)
         containerButtons.visibility = View.VISIBLE;
     }
 
     private fun barberItemClicked(userItem : User) {
-        Toast.makeText(activity, "Clicked: ${userItem.name}", Toast.LENGTH_LONG).show()
+        Toast.makeText(mainActivity, "Clicked: ${userItem.name}", Toast.LENGTH_LONG).show()
 
         val bundle: Bundle = Bundle()
         val fragment: BarberProfileFragment = BarberProfileFragment()
         bundle.putString("name", userItem.name)
 
         fragment.arguments = bundle
-        activity?.supportFragmentManager!!
+        mainActivity?.supportFragmentManager!!
             .beginTransaction()
             //.AddSharedElement(image, image.TransitionName)
             .replace(R.id.container_frame, fragment)
@@ -71,9 +74,23 @@ class PlacesFragment : Fragment() {
 
     private fun addUsers()
     {
-        for (i in 1..15) {
-            users.add(User("Emerson 00000"+ i, "Bello", 4.5, 100))
+        //mainActivity.myData
+        for (item in mainActivity.data!!)
+        {
+            var name = (item.value as JSONObject).get("name") as String
+            var location = ((item.value as JSONObject).get("location") as JSONObject).get("city") as String
+            var qualificationAny = (item.value as JSONObject).get("qualification")
+            //var qualification: Double
+            var qualification = if (qualificationAny is Long) qualificationAny.toDouble() else qualificationAny as Double
+
+            users.add(User( name, location, qualification, 100))
         }
+        /*for (i in 1..15) {
+            users.add(User( "Emerson 00000"+ i, "Bello", 4.5, 100))
+        }*/
     }
 
+    override fun onUpdateBarberData(barber: JSONObject) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

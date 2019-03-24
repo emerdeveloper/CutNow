@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import co.com.emegonza.cutnow.MainActivity
 import co.com.emegonza.cutnow.R
 import co.com.emegonza.cutnow.contracts.FirebaseDelegate
 import co.com.emegonza.cutnow.model.User
@@ -44,11 +45,10 @@ class MapsFragment : Fragment(),
 
     private val MY_LOCATION_REQUEST_CODE = 1
     private lateinit var mMap: GoogleMap
-    var fragment : SupportMapFragment? = null
+    private var fragment : SupportMapFragment? = null
     private var tmpRealTimeMarker: ArrayList<Marker> = ArrayList()
     private var realTimeMarker: ArrayList<Marker> = ArrayList()
-
-    //private var isMapsReady = false
+    private var mainActivity: MainActivity = MainActivity()
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -65,6 +65,7 @@ class MapsFragment : Fragment(),
     ): View? {
          // Inflate the layout for this fragment
          val rootView : View = inflater.inflate(R.layout.activity_maps, container, false)
+         mainActivity =  activity as MainActivity
 
          if (isGooglePlayServicesAvailable())
          // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -77,7 +78,7 @@ class MapsFragment : Fragment(),
 
 
     //Events Maps
-    fun enableMyLocationIfPermitted() {
+    private fun enableMyLocationIfPermitted() {
         if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -110,7 +111,7 @@ class MapsFragment : Fragment(),
         }
     }
 
-    fun showDefaultLocation() {
+    private fun showDefaultLocation() {
         Toast.makeText(
             activity, "Location permission not granted, " + "showing default location",
             Toast.LENGTH_SHORT
@@ -126,7 +127,7 @@ class MapsFragment : Fragment(),
 
         enableMyLocationIfPermitted()
 
-        //getPlaces()
+        showMarker(mainActivity.data!!)
 
         // Enable Zoom
         mMap.uiSettings.isZoomGesturesEnabled = true
@@ -211,8 +212,13 @@ class MapsFragment : Fragment(),
         return false
     }
 
-    override fun onUpdateBarberData(barber: JSONObject) {
+    override fun onUpdateBarberData(barber: JSONObject)
+    {
+        showMarker(barber)
+    }
 
+    private fun showMarker(barber: JSONObject)
+    {
         for (marker in realTimeMarker)
         {
             marker.remove()
@@ -235,6 +241,5 @@ class MapsFragment : Fragment(),
         realTimeMarker.clear()
         realTimeMarker.addAll(tmpRealTimeMarker)
     }
-
     //TODO : preguntar por el GPS si está  activo
 }

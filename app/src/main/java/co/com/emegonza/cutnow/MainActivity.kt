@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.widget.Button
+import android.widget.Toast
 import co.com.emegonza.cutnow.activities.listUsers.PlacesFragment
 import co.com.emegonza.cutnow.activities.map.MapsFragment
 import co.com.emegonza.cutnow.contracts.FirebaseDelegate
@@ -15,15 +16,13 @@ import org.json.simple.JSONObject
 import org.json.simple.parser.JSONParser
 import org.json.JSONException
 
-
-
-
 class MainActivity : AppCompatActivity() {
 
     private var place : Button? = null
     private var map : Button? = null
     lateinit var database: DatabaseReference
     var delegate: FirebaseDelegate? = null
+    var data: JSONObject? = JSONObject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +61,6 @@ class MainActivity : AppCompatActivity() {
 
     //Methods
     private fun addFragment(fragment: Fragment, addToBackStack: Boolean, tag: String) {
-
         if (fragment is FirebaseDelegate) {
             delegate = fragment
         }
@@ -79,19 +77,19 @@ class MainActivity : AppCompatActivity() {
 
     //Get Data from Firebase
     private fun getPlaces(){
-        var jsonObject = JSONObject()
-        var jsonObject2 = JSONObject()
-        var jsonParser = JSONParser()
-        //var jsonG = JSON
+        //var jsonObject: JSONObject
         val menuListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                 var value =  dataSnapshot.value as (MutableMap<String, Any>)
-                jsonObject = getJsonFromMap(value)
-                delegate?.onUpdateBarberData(jsonObject)
+                data = getJsonFromMap(value)
+                delegate?.onUpdateBarberData(data!!)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(this@MainActivity,
+                    "loadPost:onCancelled ${databaseError.toException()}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 println("loadPost:onCancelled ${databaseError.toException()}")
             }
         }
@@ -101,7 +99,6 @@ class MainActivity : AppCompatActivity() {
     @Throws(JSONException::class)
     private fun getJsonFromMap(map: MutableMap<String, Any>): JSONObject {
         val jsonData = JSONObject()
-        var markerOptions = MarkerOptions()
         for (key in map.keys) {
 
             if (key.equals("location"))
