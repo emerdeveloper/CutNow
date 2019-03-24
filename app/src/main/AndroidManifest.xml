@@ -46,7 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
+        <!--<activity
                 android:name=".activities.profile.BarberProfileFragment"
                 android:label="@string/title_activity_scrolling"
                 android:theme="@style/AppTheme">
@@ -55,7 +55,7 @@
                 android:name=".ScrollingActivity"
                 android:label="@string/title_activity_scrolling"
                 android:theme="@style/AppTheme">
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>

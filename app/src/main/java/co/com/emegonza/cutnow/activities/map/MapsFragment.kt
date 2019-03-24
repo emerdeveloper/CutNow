@@ -16,8 +16,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import co.com.emegonza.cutnow.MainActivity
 import co.com.emegonza.cutnow.R
+import co.com.emegonza.cutnow.contracts.FirebaseDelegate
+import co.com.emegonza.cutnow.model.User
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
@@ -27,21 +28,24 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.database.*
+import org.json.simple.JSONArray
+import org.json.simple.JSONObject
+import org.json.simple.parser.JSONParser
 
 class MapsFragment : Fragment(),
     OnMapReadyCallback,
     GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener,
-    LocationListener {
+    LocationListener,
+    FirebaseDelegate {
 
     private val MY_LOCATION_REQUEST_CODE = 1
     private lateinit var mMap: GoogleMap
     var fragment : SupportMapFragment? = null
-    var contextActivity : Context? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        contextActivity = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,18 +72,19 @@ class MapsFragment : Fragment(),
 
     //Events Maps
     fun enableMyLocationIfPermitted() {
-        if (ContextCompat.checkSelfPermission(contextActivity!!, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(
-                (MainActivity()),
+                (activity!!),
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
                 MY_LOCATION_REQUEST_CODE
             )
 
             // Show rationale and request permission.
             Toast.makeText(
-                contextActivity, "Location permission not granted, " + "showing default location",
+                activity, "Location permission not granted, " + "showing default location",
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -89,20 +94,19 @@ class MapsFragment : Fragment(),
             mMap.setOnMyLocationButtonClickListener(this)
             mMap.setOnMyLocationClickListener(this)
             //contextActivity.
-            var locationManager : LocationManager = getActivity()!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager//ContextCompat.getSystemService(contextActivity!!, LOCATION_SERVICE) as LocationManager
+            var locationManager : LocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             var bestProvider : String = locationManager.getBestProvider(Criteria(), true)
             var location = locationManager.getLastKnownLocation(bestProvider);
             if (location != null) {
                 onLocationChanged(location);
             }
-            locationManager.requestLocationUpdates(bestProvider, 20000, 0f, this)
-            //locationManager.requestLocationUpdates(bestProvider, 20000, 0, this)
+            //locationManager.requestLocationUpdates(bestProvider, 20000, 0f, this)
         }
     }
 
     fun showDefaultLocation() {
         Toast.makeText(
-            contextActivity, "Location permission not granted, " + "showing default location",
+            activity, "Location permission not granted, " + "showing default location",
             Toast.LENGTH_SHORT
         ).show()
         val redmond = LatLng(47.6739881, -122.121512)
@@ -115,6 +119,8 @@ class MapsFragment : Fragment(),
         mMap = googleMap
 
         enableMyLocationIfPermitted()
+
+        //getPlaces()
 
         // Enable Zoom
         mMap.uiSettings.isZoomGesturesEnabled = true
@@ -133,7 +139,6 @@ class MapsFragment : Fragment(),
             grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
             enableMyLocationIfPermitted()
-
         } else {
             // Permission was denied. Display an error message.
             showDefaultLocation()
@@ -147,12 +152,11 @@ class MapsFragment : Fragment(),
 
     override fun onMyLocationClick(location: Location) {
         //mMap.setMinZoomPreference(15f)
-
         mMap.addCircle(createCircle(location))
     }
 
     //Create Circle
-    fun createCircle(location: Location) : CircleOptions {
+    private fun createCircle(location: Location) : CircleOptions {
         val circleOptions = CircleOptions()
         circleOptions.center(
             LatLng(
@@ -188,19 +192,22 @@ class MapsFragment : Fragment(),
         //Method Override
     }
 
-
-
     //Google playServices
     private fun isGooglePlayServicesAvailable(): Boolean {
         val googleApiAvailability = GoogleApiAvailability.getInstance()
-        val status = googleApiAvailability.isGooglePlayServicesAvailable(contextActivity)
+        val status = googleApiAvailability.isGooglePlayServicesAvailable(activity)
         if (ConnectionResult.SUCCESS == status)
             return true
         else  if (googleApiAvailability.isUserResolvableError(status)){
-            var dialog = GooglePlayServicesUtil.getErrorDialog(status, getActivity(), status);
+            var dialog = GooglePlayServicesUtil.getErrorDialog(status, activity, status);
             dialog.show();
         }
         return false
+    }
+
+    override fun OnUpdateBarberData(berber: JSONObject) {
+        var j = berber.get("emegonza")
+        println("Soy MapsFragment y tengo el dato de me notificó la Actividad"+ j)
     }
 
     //TODO : preguntar por el GPS si está  activo

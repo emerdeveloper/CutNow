@@ -66,7 +66,7 @@ class PlacesFragment : Fragment() {
             //.AddSharedElement(image, image.TransitionName)
             .replace(R.id.container_frame, fragment)
             .addToBackStack("barber")
-            .commit();
+            .commit()
     }
 
     private fun addUsers()

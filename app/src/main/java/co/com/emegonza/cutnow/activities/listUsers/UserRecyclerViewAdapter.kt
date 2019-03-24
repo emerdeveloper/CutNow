@@ -14,7 +14,6 @@ class UserRecyclerViewAdapter(val items : ArrayList<User>, val clickListener: (U
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_list, parent, false)
         return UserRecyclerViewHolderItem(view)
-        //return UserRecyclerViewHolderItem(LayoutInflater.from(context).inflate(R.layout.item_list, holder, false))
     }
 
     override fun getItemCount() = items.size
@@ -23,10 +22,6 @@ class UserRecyclerViewAdapter(val items : ArrayList<User>, val clickListener: (U
         // Populate ViewHolder with data that corresponds to the position in the list
         // which we are told to load
         (holder as UserRecyclerViewHolderItem).bind(items[position], clickListener)
-       /* p0?.nameTextView?.text = items[p1].name
-        p0?.location?.text = items[p1].location
-        p0?.qualification?.text = items[p1].qualification.toString()
-        p0?.usersQuantity?.text = "(" + items[p1].usersQuantity.toString() + ")"*/
     }
 
     //ViewHolder
