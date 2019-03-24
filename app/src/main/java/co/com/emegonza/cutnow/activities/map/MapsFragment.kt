@@ -28,6 +28,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.*
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
@@ -43,6 +45,10 @@ class MapsFragment : Fragment(),
     private val MY_LOCATION_REQUEST_CODE = 1
     private lateinit var mMap: GoogleMap
     var fragment : SupportMapFragment? = null
+    private var tmpRealTimeMarker: ArrayList<Marker> = ArrayList()
+    private var realTimeMarker: ArrayList<Marker> = ArrayList()
+
+    //private var isMapsReady = false
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -177,7 +183,7 @@ class MapsFragment : Fragment(),
         mMap.addCircle(createCircle(location!!))
         //mMap.addMarker(new MarkerOptions().position(latLng));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16f));
     }
 
     override fun onProviderEnabled(provider: String?) {
@@ -205,9 +211,29 @@ class MapsFragment : Fragment(),
         return false
     }
 
-    override fun OnUpdateBarberData(berber: JSONObject) {
-        var j = berber.get("emegonza")
-        println("Soy MapsFragment y tengo el dato de me notificó la Actividad"+ j)
+    override fun onUpdateBarberData(barber: JSONObject) {
+
+        for (marker in realTimeMarker)
+        {
+            marker.remove()
+        }
+
+        for (item in barber)
+        {
+            var location = ((item.value as JSONObject).get("location") as JSONObject).get("latLang") as MarkerOptions
+            tmpRealTimeMarker.add(mMap.addMarker(location))
+            /*
+            for (json in (item.value as JSONObject))
+            {
+                if (json.key!!.equals("location"))
+                {
+                    var location =  (json.value as JSONObject).get("latLang") as MarkerOptions
+                    tmpRealTimeMarker.add(mMap.addMarker(location))
+                }
+            }*/
+        }
+        realTimeMarker.clear()
+        realTimeMarker.addAll(tmpRealTimeMarker)
     }
 
     //TODO : preguntar por el GPS si está  activo

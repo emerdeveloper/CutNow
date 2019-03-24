@@ -7,10 +7,15 @@ import android.widget.Button
 import co.com.emegonza.cutnow.activities.listUsers.PlacesFragment
 import co.com.emegonza.cutnow.activities.map.MapsFragment
 import co.com.emegonza.cutnow.contracts.FirebaseDelegate
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.*
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 import org.json.simple.parser.JSONParser
+import org.json.JSONException
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -75,12 +80,15 @@ class MainActivity : AppCompatActivity() {
     //Get Data from Firebase
     private fun getPlaces(){
         var jsonObject = JSONObject()
+        var jsonObject2 = JSONObject()
+        var jsonParser = JSONParser()
+        //var jsonG = JSON
         val menuListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                var value =  dataSnapshot.value as (Map<String, String>)
-                jsonObject = JSONObject(value)
-                delegate?.OnUpdateBarberData(jsonObject)
+                var value =  dataSnapshot.value as (MutableMap<String, Any>)
+                jsonObject = getJsonFromMap(value)
+                delegate?.onUpdateBarberData(jsonObject)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -89,4 +97,61 @@ class MainActivity : AppCompatActivity() {
         }
         database.child("barber").addValueEventListener(menuListener)
     }
+
+    @Throws(JSONException::class)
+    private fun getJsonFromMap(map: MutableMap<String, Any>): JSONObject {
+        val jsonData = JSONObject()
+        var markerOptions = MarkerOptions()
+        for (key in map.keys) {
+
+            if (key.equals("location"))
+            {
+                 getLocation(map[key] as MutableMap<String, Any>)
+            }
+
+            var value = map[key]
+            if (value is MutableMap<*, *>) {
+                value = getJsonFromMap((value as MutableMap<String, Any>?)!!)
+            }
+            jsonData[key] = value
+        }
+        return jsonData
+    }
+
+    private fun getLocation(map: MutableMap<String, Any>)
+    {
+        var latitude: Double? = null
+        var longitude: Double? = null
+        val markerOptions = MarkerOptions()
+
+        for (key in map.keys) {
+            if (key.equals("latitude"))
+            {
+                latitude = map[key] as Double
+            }
+            if(key.equals("longitude"))
+            {
+                longitude = map[key] as Double
+            }
+        }
+
+        map.put("latLang", markerOptions.position(LatLng(latitude!!, longitude!!)))
+        map.remove("latitude")
+        map.remove("longitude")
+        //return markerOptions.position(LatLng(latitude!!, longitude!!))
+    }
+
+    //Method Generic
+   /* @Throws(JSONException::class)
+    private fun getJsonFromMap(map: Map<String, Any>): JSONObject {
+        val jsonData = JSONObject()
+        for (key in map.keys) {
+            var value = map[key]
+            if (value is Map<*, *>) {
+                value = getJsonFromMap((value as Map<String, Any>?)!!)
+            }
+            jsonData[key] = value
+        }
+        return jsonData
+    }*/
 }
