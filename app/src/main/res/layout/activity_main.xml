@@ -14,6 +14,7 @@
             android:id="@+id/container_frame"
             android:layout_marginTop="5dp"
             android:orientation="horizontal"/>
+
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"

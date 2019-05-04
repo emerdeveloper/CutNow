@@ -16,6 +16,7 @@
             android:orientation="horizontal"
             android:gravity="center">
         <ImageView
+                android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:contentDescription="TODO" android:src="@drawable/barber"/>

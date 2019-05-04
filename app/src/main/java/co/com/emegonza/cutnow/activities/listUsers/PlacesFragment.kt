@@ -79,8 +79,8 @@ class PlacesFragment : Fragment(), FirebaseDelegate {
             var location = ((item.value as JSONObject).get("location") as JSONObject).get("city") as String
             var qualificationAny = (item.value as JSONObject).get("qualification")
             var qualification = if (qualificationAny is Long) qualificationAny.toDouble() else qualificationAny as Double
-
-            users.add(User( name, location, qualification, 100))
+            var profileImage = (item.value as JSONObject).get("profileImage") as String
+            users.add(User( name, location, qualification, 100, profileImage))
         }
         return users
     }

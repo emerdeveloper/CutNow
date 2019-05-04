@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import co.com.emegonza.cutnow.R
 import co.com.emegonza.cutnow.model.User
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_list.view.*
 
 class UserRecyclerViewAdapter(val items : ArrayList<User>, val clickListener: (User) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -28,6 +29,7 @@ class UserRecyclerViewAdapter(val items : ArrayList<User>, val clickListener: (U
     class UserRecyclerViewHolderItem(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(user: User, clickListener: (User) -> Unit) {
             itemView.nameTextView.text = user.name
+            Picasso.get().load(user.profileImage).into(itemView.profileImage)
             itemView.location.text = user.location
             itemView.qualification.text = user.qualification.toString()
             itemView.usersQuantity.text = "(" + user.usersQuantity.toString() + ")"
