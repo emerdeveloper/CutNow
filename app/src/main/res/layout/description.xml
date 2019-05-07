@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" android:weightSum="4" android:gravity="center_vertical">
+    <TextView
+            style="@style/ThirdOpenSansBoldText"
+            android:textSize="40sp"
+            android:text="TAB DESCRIPTION"
+            tools:text="4.5"/>
+
+    <TextView
+            android:id="@+id/qualification"
+            style="@style/ThirdOpenSansBoldText"
+            tools:text="4.5"/>
+    <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:rating="4.5"
+            android:numStars="5" android:layout_marginRight="10dp" android:layout_marginLeft="10dp"/>
+    <TextView
+            android:id="@+id/usersQuantity"
+            style="@style/ThirdOpenSansBoldText"
+            tools:text="(100)"/>
+</LinearLayout>

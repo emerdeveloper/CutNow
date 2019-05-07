@@ -2,7 +2,9 @@ package co.com.emegonza.cutnow.activities.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,9 @@ import android.view.ViewGroup
 import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout
 import co.com.emegonza.cutnow.R
+import co.com.emegonza.cutnow.activities.profile.fragments.DescriptionFragment
+import co.com.emegonza.cutnow.activities.profile.fragments.PriceFragment
+import co.com.emegonza.cutnow.activities.profile.fragments.ReviewFragment
 
 class BarberProfileFragment : Fragment() {
 
@@ -30,6 +35,8 @@ class BarberProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.barber_profile, container, false)
         val toolbarLayout : Toolbar = view.findViewById(R.id.toolbar)
+        val viewPager : ViewPager = view.findViewById(R.id.viewPagerContainer)
+        val tabLayout : TabLayout = view.findViewById(R.id.tabs)
 
 
         if(activity is AppCompatActivity){
@@ -42,6 +49,9 @@ class BarberProfileFragment : Fragment() {
         containerButtons.visibility = View.GONE;
 
         toolbarLayout.title = name
+
+        setupViewPager(viewPager)
+        tabLayout.setupWithViewPager(viewPager)
         /*fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -60,5 +70,15 @@ class BarberProfileFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         //listener = null
+    }
+
+    private fun setupViewPager(viewPager: ViewPager) {
+        val adapter = ViewPagerAdapter(childFragmentManager)
+
+        adapter.addFragment(DescriptionFragment(), "DESCRIPTION")
+        adapter.addFragment(PriceFragment(), "PRICES")
+        adapter.addFragment(ReviewFragment(), "REVIEWS")
+
+        viewPager.adapter = adapter
     }
 }
