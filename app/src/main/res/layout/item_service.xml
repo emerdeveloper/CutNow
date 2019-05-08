@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        style="@style/CardViewBase"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:foreground="?android:attr/selectableItemBackground">
+    <LinearLayout
+            style="@style/CardViewItemListContent"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:gravity="center">
+        <TextView
+                android:id="@+id/serviceName"
+                style="@style/SecondOpenSansBoldText"
+                android:text="Corte de cabello"/>
+        <TextView
+                android:id="@+id/valueService"
+                style="@style/MainOpenSansRegularText"
+                android:layout_marginTop="5dp"
+                android:text="$ 20.000"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

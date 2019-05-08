@@ -7,18 +7,14 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import co.com.emegonza.cutnow.R
-import co.com.emegonza.cutnow.activities.profile.fragments.DescriptionFragment
-import co.com.emegonza.cutnow.activities.profile.fragments.PriceFragment
-import co.com.emegonza.cutnow.activities.profile.fragments.ReviewFragment
+import co.com.emegonza.cutnow.activities.profile.fragments.*
 import com.squareup.picasso.Picasso
 
 class BarberProfileFragment : Fragment() {
@@ -105,7 +101,7 @@ class BarberProfileFragment : Fragment() {
         val adapter = ViewPagerAdapter(childFragmentManager)
 
         adapter.addFragment(DescriptionFragment(), "Descripción")
-        adapter.addFragment(PriceFragment(), "Precios")
+        adapter.addFragment(ServiceFragment(), "Servicios")
         adapter.addFragment(ReviewFragment(), "Reseñas")
 
         viewPager.adapter = adapter
