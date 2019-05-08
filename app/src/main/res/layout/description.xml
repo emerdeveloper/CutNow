@@ -1,29 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" android:weightSum="4" android:gravity="center_vertical">
-    <TextView
-            style="@style/ThirdOpenSansBoldText"
-            android:textSize="40sp"
-            android:text="TAB DESCRIPTION"
-            tools:text="4.5"/>
+<android.support.v4.widget.NestedScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
-    <TextView
-            android:id="@+id/qualification"
-            style="@style/ThirdOpenSansBoldText"
-            tools:text="4.5"/>
-    <RatingBar
-            android:layout_width="wrap_content"
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/ratingBarStyleSmall"
-            android:rating="4.5"
-            android:numStars="5" android:layout_marginRight="10dp" android:layout_marginLeft="10dp"/>
-    <TextView
-            android:id="@+id/usersQuantity"
-            style="@style/ThirdOpenSansBoldText"
-            tools:text="(100)"/>
-</LinearLayout>
+            android:orientation="vertical">
+    <!--Resume data-->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:paddingTop="5dp"
+                android:paddingBottom="15dp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+                <TextView
+                        android:id="@+id/cuts"
+                        style="@style/MainOpenSansBoldText"
+                        android:textSize="25dp"
+                        android:text="2.228"
+                        android:includeFontPadding="false"/>
+                <TextView
+                        android:id="@+id/labelCuts"
+                        style="@style/MainOpenSansRegularText"
+                        android:text="Cortes"
+                        android:includeFontPadding="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+                <TextView
+                        android:id="@+id/rating"
+                        style="@style/MainOpenSansBoldText"
+                        android:textSize="25dp"
+                        android:text="4.5"
+                        android:includeFontPadding="false"/>
+                <TextView
+                        android:id="@+id/labelRating"
+                        style="@style/MainOpenSansRegularText"
+                        android:text="Calificación"
+                        android:includeFontPadding="false"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+                <TextView
+                        android:id="@+id/joinedTime"
+                        style="@style/MainOpenSansBoldText"
+                        android:textSize="25dp"
+                        android:text="2"
+                        android:includeFontPadding="false"/>
+                <TextView
+                        android:id="@+id/labeljoinedTime"
+                        style="@style/MainOpenSansRegularText"
+                        android:text="Tiempo"
+                        android:includeFontPadding="false"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    <!--Resume data-->
+        <View android:layout_width="match_parent"
+              android:layout_height="0.7dp"
+              android:background="@color/divider"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+            <TextView
+                    android:id="@+id/location"
+                    style="@style/MainOpenSansRegularText"
+                    android:text="Carrera 64b # 75 - 2 a 75 - 95, Medellin, Antioquia"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent"
+              android:layout_height="0.7dp"
+              android:background="@color/divider"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+        <TextView
+                android:id="@+id/labelSpeak"
+                style="@style/MainOpenSansRegularText"
+                android:text="Habla "/>
+        <TextView
+                android:id="@+id/firstLanguage"
+                style="@style/SecondOpenSansBoldText"
+                android:text="Español"
+                android:includeFontPadding="false"/>
+        <TextView
+                style="@style/MainOpenSansRegularText"
+                android:text=" y "/>
+        <TextView
+                android:id="@+id/secondLanguage"
+                style="@style/SecondOpenSansBoldText"
+                android:text="Ingles"
+                android:includeFontPadding="false"/>
+    </LinearLayout>
+        <View android:layout_width="match_parent"
+              android:layout_height="0.7dp"
+              android:background="@color/divider"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

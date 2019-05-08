@@ -60,11 +60,12 @@ class PlacesFragment : Fragment(), FirebaseDelegate {
         val bundle: Bundle = Bundle()
         val fragment: BarberProfileFragment = BarberProfileFragment()
         bundle.putString("name", userItem.name)
+        bundle.putString("imageProfile", userItem.profileImage)
 
         fragment.arguments = bundle
         mainActivity?.supportFragmentManager!!
             .beginTransaction()
-            //.AddSharedElement(image, image.TransitionName)
+            //.addSharedElement(sharedElement, transitionName)
             .replace(R.id.container_frame, fragment)
             .addToBackStack("barber")
             .commit()

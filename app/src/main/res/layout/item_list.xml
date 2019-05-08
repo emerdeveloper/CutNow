@@ -19,7 +19,9 @@
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:contentDescription="TODO" android:src="@drawable/barber"/>
+                android:contentDescription="TODO"
+                android:src="@drawable/barber"
+                android:transitionName="transitionProfileImage"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -32,7 +34,7 @@
                     tools:text="Alejandro Jimenes"/>
             <TextView
                     android:id="@+id/location"
-                    style="@style/SecondOpenSansBoldText"
+                    style="@style/MainOpenSansRegularText"
                     tools:text="Bello"/>
             <LinearLayout
                     android:layout_width="match_parent"

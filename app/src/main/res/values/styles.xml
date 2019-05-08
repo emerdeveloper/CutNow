@@ -28,22 +28,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <!--<style name="RatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/ratingbar_selector_small</item>
-        <item name="android:minHeight">16dip</item>
-        <item name="android:maxHeight">16dip</item>
-    </style>-->
-
     <style name="ThirdOpenSansBoldText" parent="@style/BaseFontOpenSansRegularBlack">
         <item name="android:textSize">@dimen/thirdText</item>
     </style>
 
-    <style name="SecondOpenSansBoldText" parent="@style/BaseFontOpenSansRegularBlack">
+    <style name="MainOpenSansRegularText" parent="@style/BaseFontOpenSansRegularBlack">
         <item name="android:textSize">@dimen/secondText</item>
     </style>
 
     <style name="MainOpenSansBoldText" parent="@style/BaseFontOpenSansBoldBlack">
         <item name="android:textSize">@dimen/mainText</item>
+    </style>
+    <style name="SecondOpenSansBoldText" parent="@style/BaseFontOpenSansBoldBlack">
+        <item name="android:textSize">@dimen/secondText</item>
     </style>
 
     <style name="BaseFontOpenSansBoldBlack" parent="@style/BaseFont">
