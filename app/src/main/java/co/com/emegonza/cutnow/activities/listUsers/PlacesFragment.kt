@@ -55,7 +55,7 @@ class PlacesFragment : Fragment(), FirebaseDelegate {
     }
 
     private fun barberItemClicked(userItem : User) {
-        Toast.makeText(mainActivity, "Clicked: ${userItem.name}", Toast.LENGTH_LONG).show()
+        //Toast.makeText(mainActivity, "Clicked: ${userItem.name}", Toast.LENGTH_LONG).show()
 
         val bundle: Bundle = Bundle()
         val fragment: BarberProfileFragment = BarberProfileFragment()

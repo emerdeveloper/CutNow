@@ -43,6 +43,11 @@
     <style name="MainOpenSansBoldText" parent="@style/BaseFontOpenSansBoldBlack">
         <item name="android:textSize">@dimen/mainText</item>
     </style>
+
+    <style name="MainOpenSansRegularBlackText" parent="@style/BaseFontOpenSansRegularBlack">
+        <item name="android:textSize">@dimen/mainText</item>
+    </style>
+
     <style name="SecondOpenSansBoldText" parent="@style/BaseFontOpenSansBoldBlack">
         <item name="android:textSize">@dimen/secondText</item>
     </style>

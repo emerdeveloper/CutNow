@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/containerServiceItem"
+            style="@style/CardViewItemListContent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+        <CheckBox android:id="@+id/checkboxService"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:layout_constraintBottom_toBottomOf="parent"/>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkboxService"
+                app:layout_constraintEnd_toStartOf="@+id/valueService" android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+            <TextView
+                    android:id="@+id/serviceName"
+                    style="@style/MainOpenSansRegularBlackText"
+                    tools:text="Haircut"/>
+            <TextView
+                    android:id="@+id/serviceDuration"
+                    style="@style/MainOpenSansRegularText"
+                    tools:text="45 munutos"/>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/valueService"
+                style="@style/MainOpenSansRegularBlackText"
+                tools:text="$25.000" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="0.7dp"
+          android:layout_marginRight="@dimen/contentCardViewPaddingLeftRight"
+          android:layout_marginLeft="@dimen/contentCardViewPaddingLeftRight"
+          android:background="@color/divider"
+          android:layout_marginBottom="3dp"/>
+</LinearLayout>

@@ -66,7 +66,7 @@ class ServiceFragment : Fragment() {
     {
         var serviceBarber : ArrayList<ServiceBarber> = ArrayList()
         for (i in 1..7) {
-            serviceBarber.add(ServiceBarber("Corte de cabello" + i,  "$ " + (i+1) + "2.0000"))
+            serviceBarber.add(ServiceBarber("Corte de cabello" + i,  "$ " + (i+1) + "2.0000", 45))
         }
         return serviceBarber;
     }

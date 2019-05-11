@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
@@ -14,6 +15,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import co.com.emegonza.cutnow.R
+import co.com.emegonza.cutnow.activities.appointment.AppointmentFragment
 import co.com.emegonza.cutnow.activities.profile.fragments.*
 import com.squareup.picasso.Picasso
 
@@ -43,12 +45,8 @@ class BarberProfileFragment : Fragment() {
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
         val profileImage : ImageView = view.findViewById(R.id.profileImage)
         val nameBarber : TextView = view.findViewById(R.id.nameBarber)
+        val fab : FloatingActionButton = view.findViewById(R.id.fab)
 
-        /*if(activity is AppCompatActivity){
-            (activity as AppCompatActivity).setSupportActionBar(toolbarLayout)
-            if ((activity as AppCompatActivity).supportActionBar != null)
-                (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        }*/
 
         var containerButtons = activity!!.findViewById<LinearLayout>(R.id.container_visualization)
         containerButtons.visibility = View.GONE;
@@ -77,15 +75,21 @@ class BarberProfileFragment : Fragment() {
 
         setupViewPager(viewPager)
         tabLayout.setupWithViewPager(viewPager)
-        /*fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
+        fab.setOnClickListener { view ->
 
-        //linearLayoutManager = LinearLayoutManager(activity)
-        /*recyclerView.layoutManager =  LinearLayoutManager(activity)
-        recyclerView.hasFixedSize()
-        recyclerView.adapter = UserRecyclerViewAdapter(users, { userItem : User -> barberItemClicked(userItem) })*/
+            val bundle: Bundle = Bundle()
+            val fragment: AppointmentFragment = AppointmentFragment()
+            bundle.putString("name", name)
+            bundle.putString("imageProfile", imageProfile)
+
+            fragment.arguments = bundle
+            activity?.supportFragmentManager!!
+                .beginTransaction()
+                //.addSharedElement(sharedElement, transitionName)
+                .replace(R.id.container_frame, fragment)
+                .addToBackStack("appointment")
+                .commit()
+        }
         return view
     }
     override fun onAttach(context: Context) {
