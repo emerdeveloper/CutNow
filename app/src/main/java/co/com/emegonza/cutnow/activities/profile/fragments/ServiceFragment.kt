@@ -47,7 +47,7 @@ class ServiceFragment : Fragment() {
         mainActivity =  activity as MainActivity
 
         serviceRecyclerView.layoutManager =  GridLayoutManager(mainActivity, 2)
-        serviceRecyclerView.addItemDecoration(MarginDecoration(20, 2))
+        //serviceRecyclerView.addItemDecoration(MarginDecoration(20, 2))
         serviceRecyclerView.hasFixedSize()
         serviceRecyclerView.adapter = ServiceRecyclerViewAdapter(addServiceBarber())
 

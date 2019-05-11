@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                            android:orientation="vertical"
+                                            android:paddingLeft="20dp"
+                                            android:paddingRight="20dp">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+    <ImageView
+            android:id="@+id/userProfileImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="TODO"
+            android:src="@drawable/barber"
+            android:transitionName="transitionProfileImage"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+        <TextView
+                android:id="@+id/usersName"
+                style="@style/ThirdOpenSansRegularBlackText"
+                android:text="Homero J. Simpson"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
+            <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:rating="4.5"
+                    android:numStars="5"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"/>
+            <TextView
+                    android:id="@+id/dateReview"
+                    style="@style/ThirdOpenSansRegularText"
+                    tools:text="26/04/2017"/>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/userComment"
+                style="@style/ThirdOpenSansRegularText"
+                tools:text="Nunca debe hacer lo contrario a lo que quiera el cliente por más que considere que tiene la razón. Lo fundamental es siempre preguntarle qué quiere hacer con su barba y orientarlo en el proceso sin imponer nada."/>
+    </LinearLayout>
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="0.7dp"
+          android:layout_marginBottom="5dp"
+          android:background="@color/divider"/>
+</LinearLayout>

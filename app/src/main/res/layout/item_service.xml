@@ -5,9 +5,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         style="@style/CardViewBase"
-        android:padding="8dp"
         android:background="@android:color/white"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_margin="7dp">
     <LinearLayout
             style="@style/CardViewItemListContent"
             android:orientation="vertical"
